@@ -1,197 +1,222 @@
-# CV Screening Automation with Make.com & Claude AI
+# CV Screening Automation with Make.com and Claude AI
 
-Automatically screen job applications using AI-powered analysis. This system reduces manual CV review time by 90% while maintaining consistent evaluation criteria.
+Automatically screen job applications using AI-powered analysis. This system reduces manual CV review time by 90% whilst maintaining consistent evaluation criteria.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Make.com-purple.svg)
 ![AI](https://img.shields.io/badge/AI-Claude-orange.svg)
 
-## 🎯 What This Does
+## Overview
 
-This automation system:
-- ✅ Monitors a Google Drive folder for new CVs
-- ✅ Extracts text from PDF and DOCX files
-- ✅ Uses Claude AI to analyze candidates against your criteria
-- ✅ Records results in Google Sheets with evidence quotes
-- ✅ Automatically organizes files into Shortlisted/Review folders
+This automation system provides:
+- Monitoring of Google Drive folders for new CVs
+- Text extraction from PDF and DOCX files
+- Claude AI analysis of candidates against your criteria
+- Recording of results in Google Sheets with evidence quotations
+- Automatic organisation of files into Shortlisted/Review folders
 
-**No coding required** - just follow the setup guide!
+No coding required. Simply follow the setup guide.
 
-## 📊 Results
+## Results and Benefits
 
-- **Time saved:** ~90% reduction in screening time
-- **Consistency:** Every CV assessed against the same criteria
-- **Accuracy:** AI provides evidence quotes from CVs
-- **Tracking:** Complete audit trail in spreadsheet
+**Time savings:** Approximately 90% reduction in screening time  
+**Consistency:** Every CV assessed against identical criteria  
+**Accuracy:** AI provides evidence quotations from CVs  
+**Tracking:** Complete audit trail in spreadsheet format
 
-## 💰 Cost
+## Cost Structure
 
-- **Make.com:** FREE (1,000 operations/month ≈ 140 CVs)
-- **Claude API:** ~$0.01 per CV ($5 free credit included)
-- **Google Workspace:** FREE (Drive + Sheets)
+**Make.com:** Free tier (1,000 operations per month, approximately 140 CVs)  
+**Claude API:** Approximately £0.01 per CV (£5 free credit included)  
+**Google Workspace:** Free (Drive and Sheets)
 
-**Total: Essentially free for most small businesses**
+**Total cost:** Essentially free for most small businesses
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Prerequisites
 - Google Account (Gmail)
 - Make.com account (free tier)
-- Claude API key (~$5 free credit)
-- 30-45 minutes for setup
+- Claude API key (approximately £5 free credit available)
+- 30 to 45 minutes for setup
 
 ### Setup Steps
 
-1. **Clone or download this repository**
+**1. Clone or download this repository**
    ```bash
    git clone https://github.com/YOUR_USERNAME/cv-screening-automation.git
    ```
 
-2. **Follow the complete setup guide**
+**2. Follow the complete setup guide**
    - Start with: [`docs/make-com-complete-setup-guide.md`](docs/make-com-complete-setup-guide.md)
-   - Estimated time: 30-45 minutes
+   - Estimated time: 30 to 45 minutes
 
-3. **Set up your Google Sheets**
+**3. Set up your Google Sheets**
    - Use: [`docs/google-sheets-template-guide.md`](docs/google-sheets-template-guide.md)
 
-4. **Import the Make.com template**
+**4. Import the Make.com template**
    - Template: [`templates/make-com-cv-screening-blueprint.json`](templates/make-com-cv-screening-blueprint.json)
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 cv-screening-automation/
-├── README.md                          # You are here
+├── README.md                                   (This document)
 ├── docs/
-│   ├── make-com-complete-setup-guide.md   # Main setup instructions
-│   └── google-sheets-template-guide.md    # Spreadsheet configuration
+│   ├── make-com-complete-setup-guide.md       (Main setup instructions)
+│   └── google-sheets-template-guide.md        (Spreadsheet configuration)
 ├── templates/
-│   └── make-com-cv-screening-blueprint.json  # Make.com scenario template
+│   └── make-com-cv-screening-blueprint.json   (Make.com scenario template)
 └── examples/
-    └── (coming soon - sample CVs and results)
+    └── sample-test-cvs.md                      (Sample CVs and test data)
 ```
 
-## 🎓 Documentation
+## Documentation
 
-### For Beginners
-Start with the **[Complete Setup Guide](docs/make-com-complete-setup-guide.md)** - written for non-technical users with step-by-step instructions.
+### For Non-Technical Users
+Begin with the **[Complete Setup Guide](docs/make-com-complete-setup-guide.md)**, which provides step-by-step instructions written for non-technical users.
 
 ### For Technical Users
-Review the **[Scenario Blueprint](templates/make-com-cv-screening-blueprint.json)** to understand the workflow structure.
+Review the **[Scenario Blueprint](templates/make-com-cv-screening-blueprint.json)** to understand the workflow structure and technical implementation.
 
-## 🔧 How It Works
+## System Architecture
 
 ### Workflow Overview
 
 ```
 New CV Uploaded → Extract Text → AI Analysis → Update Sheet → Move File
-     (Drive)         (Parse)       (Claude)      (Sheets)     (Organize)
+     (Drive)         (Parse)       (Claude)      (Sheets)     (Organise)
 ```
 
-### Screening Criteria (Customizable)
+### Screening Criteria (Customisable)
 
-1. **Role Experience:** Has the candidate done this role before?
-2. **Organization Size:** Have they worked in similar-sized companies?
-3. **Sector Experience:** Have they worked in the same industry?
+The system evaluates candidates against three criteria:
+
+**1. Role Experience**  
+Has the candidate performed this role previously, or an equivalent position?
+
+**2. Organisation Size**  
+Have they worked in similarly sized companies?
+
+**3. Sector Experience**  
+Have they worked in the same industry?
 
 Each criterion receives:
 - **Score:** YES / NO / UNCLEAR
-- **Evidence:** Direct quote from CV
+- **Evidence:** Direct quotation from CV
 - **Confidence:** HIGH / MEDIUM / LOW
 
-## 📈 Features
+## Features
 
-### Core Features
-- ✅ Automated CV text extraction (PDF & DOCX)
-- ✅ AI-powered candidate assessment
-- ✅ Structured data output (Google Sheets)
-- ✅ Automatic file organization
-- ✅ Evidence-based scoring
+### Core Functionality
+- Automated CV text extraction (PDF and DOCX formats)
+- AI-powered candidate assessment
+- Structured data output (Google Sheets)
+- Automatic file organisation
+- Evidence-based scoring system
 
 ### Advanced Features
-- 🎨 Customizable screening criteria
-- 📊 Conditional formatting in spreadsheet
-- 🔄 Configurable check frequency
-- 📁 Smart folder organization
-- 🔍 Full audit trail
+- Customisable screening criteria
+- Conditional formatting in spreadsheet
+- Configurable check frequency
+- Smart folder organisation
+- Complete audit trail
 
 ### Optional Enhancements
-- 📧 Email notifications for top candidates
-- 📅 Interview scheduling integration
-- 🔗 ATS integration
-- 📊 Reporting dashboards
-- 🌍 Multi-language support
+- Email notifications for top candidates
+- Interview scheduling integration
+- Applicant Tracking System (ATS) integration
+- Reporting dashboards
+- Multi-language support
 
-## 🚀 Use Cases
+## Use Cases
 
-Perfect for:
-- **Small Businesses:** Streamline hiring without dedicated HR
-- **Startups:** Scale recruitment efficiently
-- **Non-Profits:** Maximize limited resources
-- **Consultants:** Offer as a service
-- **HR Teams:** Focus on interviews, not admin
+This system is particularly suitable for:
 
-## 🛠️ Customization
+**Small Businesses**  
+Streamline hiring processes without dedicated HR resources
 
-### Change Screening Criteria
-Edit the AI prompt in Module 4 of the Make.com scenario. Examples:
+**Startups**  
+Scale recruitment efforts efficiently as the organisation grows
+
+**Non-Profit Organisations**  
+Maximise limited resources whilst maintaining quality standards
+
+**Recruitment Consultants**  
+Offer as an additional service to clients
+
+**HR Teams**  
+Focus on candidate interviews rather than administrative tasks
+
+## Customisation
+
+### Modifying Screening Criteria
+
+Edit the AI prompt in Module 4 of the Make.com scenario to assess different criteria. Examples include:
 - Technical skills assessment
 - Years of experience requirements
-- Education qualifications
+- Educational qualifications
 - Language proficiency
 
-### Adjust Scoring Logic
-Modify Module 7 to change how files are organized:
-- Require 3/3 YES for shortlist
-- Require 2/3 YES and HIGH confidence
-- Create additional folders (e.g., "Maybe", "Strong Maybe")
+### Adjusting Scoring Logic
 
-See the [Setup Guide](docs/make-com-complete-setup-guide.md) for detailed customization instructions.
+Modify Module 7 to change file organisation rules:
+- Require 3/3 YES scores for shortlisting
+- Require 2/3 YES scores with HIGH confidence
+- Create additional folders (e.g., "Possible", "Strong Candidate")
 
-## 🔒 Privacy & Security
+Refer to the [Setup Guide](docs/make-com-complete-setup-guide.md) for detailed customisation instructions.
 
-- ✅ All data stored in your Google account
-- ✅ Claude API doesn't retain CV data
-- ✅ Encrypted connections (HTTPS)
-- ✅ GDPR considerations included in guide
+## Privacy and Security
 
-**Important:** Always inform candidates if using AI screening.
+**Data storage:** All data stored in your Google account  
+**API retention:** Claude API does not retain CV data  
+**Connections:** All connections encrypted (HTTPS)  
+**Compliance:** GDPR considerations included in guide
 
-## 📞 Support & Community
+**Important:** Candidates should be informed if AI screening is used in the recruitment process.
 
-### Getting Help
-- **Issues:** Open a GitHub issue
-- **Questions:** Check the [Setup Guide](docs/make-com-complete-setup-guide.md) troubleshooting section
-- **Discussions:** Use GitHub Discussions
+## Support and Community
+
+### Obtaining Help
+**Issues:** Open a GitHub issue for bug reports  
+**Questions:** Consult the [Setup Guide](docs/make-com-complete-setup-guide.md) troubleshooting section  
+**Discussions:** Use GitHub Discussions for general queries
 
 ### Contributing
-Contributions welcome! Please:
+
+Contributions are welcome. Please:
 1. Fork the repository
 2. Create a feature branch
 3. Submit a pull request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
-## 📜 License
+## Licence
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licenced under the MIT Licence. See the [LICENSE](LICENSE) file for full details.
 
-## 🙏 Acknowledgments
+## Acknowledgements
 
-- **Make.com** - Workflow automation platform
-- **Anthropic** - Claude AI API
-- **Google Workspace** - Drive & Sheets integration
+**Make.com**  
+Workflow automation platform
 
-## ⭐ Star This Repo
+**Anthropic**  
+Claude AI API provider
 
-If this project helped you, please give it a star! It helps others discover it.
+**Google Workspace**  
+Drive and Sheets integration
 
-## 📮 Contact
+## Repository Recognition
 
-Questions or suggestions? Open an issue or discussion on GitHub.
+If this project proves helpful, please consider starring the repository to help others discover it.
+
+## Contact
+
+For questions or suggestions, please open an issue or discussion on GitHub.
 
 ---
 
-**Made with ❤️ for efficient hiring**
+**Developed for efficient recruitment processes**
 
 *Last updated: October 2024*
