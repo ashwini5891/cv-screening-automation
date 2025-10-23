@@ -1,0 +1,41 @@
+# Sensitive data
+*.env
+.env
+config.json
+credentials.json
+api-keys.txt
+
+# Personal test files
+test_*.pdf
+test_*.docx
+sample_cv_*.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Don't commit actual CVs
+real_cvs/
+actual_applications/

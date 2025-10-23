@@ -1,0 +1,361 @@
+{
+  "name": "CV Screening Automation",
+  "flow": [
+    {
+      "id": 1,
+      "module": "google-drive:watchFiles",
+      "version": 3,
+      "parameters": {
+        "watch": "specificFolder",
+        "limit": 10,
+        "showAll": false
+      },
+      "mapper": {
+        "drive": "My Drive",
+        "folder": "{{FOLDER_ID: Job Applications - Inbox}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "restore": {},
+        "expect": [
+          {
+            "name": "drive",
+            "type": "select",
+            "label": "Drive",
+            "required": true
+          },
+          {
+            "name": "folder",
+            "type": "folder",
+            "label": "Folder",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "module": "google-drive:downloadAFile",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "select": "map",
+        "fileId": "{{1.id}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "restore": {
+          "expect": {
+            "select": {
+              "label": "Map"
+            }
+          }
+        },
+        "expect": [
+          {
+            "name": "select",
+            "type": "select",
+            "label": "Choose a method",
+            "required": true,
+            "validate": {
+              "enum": [
+                "map",
+                "list"
+              ]
+            }
+          },
+          {
+            "name": "fileId",
+            "type": "text",
+            "label": "File ID",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "util:TextParser",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "pattern": ".*",
+        "text": "{{parseCV(2.data, 1.name)}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        },
+        "restore": {},
+        "expect": [
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Text to parse"
+          }
+        ],
+        "interface": [
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Extracted Text"
+          }
+        ]
+      },
+      "note": "This is a placeholder. In Make.com, use 'Tools' > 'Parse PDF' or custom function."
+    },
+    {
+      "id": 4,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": false
+      },
+      "mapper": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "post",
+        "headers": [
+          {
+            "name": "x-api-key",
+            "value": "{{YOUR_CLAUDE_API_KEY}}"
+          },
+          {
+            "name": "anthropic-version",
+            "value": "2023-06-01"
+          },
+          {
+            "name": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "body": "{\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 2000,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Analyze this CV/resume and assess the candidate on these 3 criteria:\\n\\n1. Has this person done this role before or equivalent? (e.g., General Manager, Head of Operations, Director)\\n2. Have they worked in a similar size organization? (startup or small enterprise, typically <100 employees)\\n3. Have they worked in the same sector? (charity or not-for-profit)\\n\\nFor each criterion, provide:\\n- Score: YES/NO/UNCLEAR\\n- Evidence: Brief quote or reference from CV (max 50 words)\\n- Confidence: HIGH/MEDIUM/LOW\\n\\nAlso provide:\\n- Candidate Name (extracted from CV)\\n- Overall Recommendation: SHORTLIST / REVIEW / REJECT\\n- Brief Summary (2-3 sentences about candidate)\\n\\nReturn ONLY valid JSON in this exact format:\\n{\\n  \\\"candidateName\\\": \\\"string\\\",\\n  \\\"criteria1\\\": {\\n    \\\"score\\\": \\\"YES/NO/UNCLEAR\\\",\\n    \\\"evidence\\\": \\\"string\\\",\\n    \\\"confidence\\\": \\\"HIGH/MEDIUM/LOW\\\"\\n  },\\n  \\\"criteria2\\\": {\\n    \\\"score\\\": \\\"YES/NO/UNCLEAR\\\",\\n    \\\"evidence\\\": \\\"string\\\",\\n    \\\"confidence\\\": \\\"HIGH/MEDIUM/LOW\\\"\\n  },\\n  \\\"criteria3\\\": {\\n    \\\"score\\\": \\\"YES/NO/UNCLEAR\\\",\\n    \\\"evidence\\\": \\\"string\\\",\\n    \\\"confidence\\\": \\\"HIGH/MEDIUM/LOW\\\"\\n  },\\n  \\\"overallRecommendation\\\": \\\"SHORTLIST/REVIEW/REJECT\\\",\\n  \\\"summary\\\": \\\"string\\\"\\n}\\n\\nCV TEXT:\\n\\n{{3.text}}\"\n    }\n  ]\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "label": "POST"
+            },
+            "bodyType": {
+              "label": "Raw"
+            }
+          }
+        },
+        "expect": [
+          {
+            "name": "url",
+            "type": "url",
+            "label": "URL",
+            "required": true
+          },
+          {
+            "name": "method",
+            "type": "select",
+            "label": "Method",
+            "required": true
+          },
+          {
+            "name": "headers",
+            "spec": [
+              {
+                "name": "name",
+                "type": "text",
+                "label": "Name"
+              },
+              {
+                "name": "value",
+                "type": "text",
+                "label": "Value"
+              }
+            ],
+            "type": "array",
+            "label": "Headers"
+          },
+          {
+            "name": "body",
+            "type": "text",
+            "label": "Request content"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "module": "json:ParseJSON",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "json": "{{4.data.content[0].text}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        },
+        "restore": {},
+        "expect": [
+          {
+            "name": "json",
+            "type": "text",
+            "label": "JSON string",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "module": "google-sheets:addRow",
+      "version": 2,
+      "parameters": {
+        "mode": "select",
+        "insertUnformatted": false
+      },
+      "mapper": {
+        "select": "map",
+        "spreadsheetId": "{{YOUR_SPREADSHEET_ID}}",
+        "sheetId": "Sheet1",
+        "includesHeaders": true,
+        "values": {
+          "0": "{{now}}",
+          "1": "{{5.candidateName}}",
+          "2": "{{1.name}}",
+          "3": "{{1.webViewLink}}",
+          "4": "{{5.criteria1.score}}",
+          "5": "{{5.criteria1.evidence}}",
+          "6": "{{5.criteria1.confidence}}",
+          "7": "{{5.criteria2.score}}",
+          "8": "{{5.criteria2.evidence}}",
+          "9": "{{5.criteria2.confidence}}",
+          "10": "{{5.criteria3.score}}",
+          "11": "{{5.criteria3.evidence}}",
+          "12": "{{5.criteria3.confidence}}",
+          "13": "{{if(5.criteria1.score = \"YES\"; 1; 0) + if(5.criteria2.score = \"YES\"; 1; 0) + if(5.criteria3.score = \"YES\"; 1; 0)}}",
+          "14": "{{5.overallRecommendation}}",
+          "15": "{{5.summary}}"
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        },
+        "restore": {
+          "expect": {
+            "mode": {
+              "label": "Select from list"
+            },
+            "select": {
+              "label": "Map"
+            },
+            "sheetId": {
+              "label": "Sheet1"
+            },
+            "includesHeaders": {
+              "label": "Yes"
+            }
+          }
+        },
+        "expect": [
+          {
+            "name": "mode",
+            "type": "select",
+            "label": "Choose a Method",
+            "required": true
+          },
+          {
+            "name": "spreadsheetId",
+            "type": "text",
+            "label": "Spreadsheet ID",
+            "required": true
+          },
+          {
+            "name": "sheetId",
+            "type": "text",
+            "label": "Sheet Name",
+            "required": true
+          },
+          {
+            "name": "values",
+            "spec": "undefined",
+            "type": "collection",
+            "label": "Values"
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "module": "google-drive:moveAFileFolder",
+      "version": 2,
+      "parameters": {},
+      "mapper": {
+        "select": "map",
+        "fileId": "{{1.id}}",
+        "toFolder": "{{if(5.overallRecommendation = \"SHORTLIST\"; \"SHORTLIST_FOLDER_ID\"; \"REVIEW_FOLDER_ID\")}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        },
+        "restore": {
+          "expect": {
+            "select": {
+              "label": "Map"
+            }
+          }
+        },
+        "expect": [
+          {
+            "name": "select",
+            "type": "select",
+            "label": "Choose a method"
+          },
+          {
+            "name": "fileId",
+            "type": "text",
+            "label": "File ID",
+            "required": true
+          },
+          {
+            "name": "toFolder",
+            "type": "folder",
+            "label": "New location",
+            "required": true
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": false,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}
